@@ -15,9 +15,12 @@ public class Player : MonoBehaviour
     bool isFlap = false;
 
     public bool godMode = false;
+
+    GameManager gameManager = null;
     // Start is called before the first frame update
     void Start()
     {
+        gameManager = GameManager.Instance;
         animator = transform.GetComponentInChildren<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
 
@@ -41,6 +44,12 @@ public class Player : MonoBehaviour
             if (deathCooldown <= 0)
             {
                 // 게임 재시작
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+                {
+                  
+                    gameManager.RestartGame();
+                }
+
 
             }
             else
@@ -88,5 +97,6 @@ public class Player : MonoBehaviour
         isDead = true;
         deathCooldown = 1f;
         animator.SetInteger("IsDie", 1);
+        gameManager.GameOver();
     }
 }
